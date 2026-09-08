@@ -1,0 +1,18 @@
+{
+  "name": "airguard-ai",
+  "version": "1.0.0",
+  "description": "AirGuard AI - Next-Gen Environmental Intelligence & Predictive Shield Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "keywords": [
+    "air-quality",
+    "aqi",
+    "ai-dashboard",
+    "environmental-intelligence"
+  ],
+  "author": "AirGuard AI Team",
+  "license": "MIT"
+}

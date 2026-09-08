@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AirGuard AI — Next-Gen Environmental Intelligence & Predictive Shield</title>
+  <meta name="description"
+    content="AirGuard AI provides real-time ambient air quality monitoring, predictive pollution forecasting, neural risk indicators, and automated early warning intelligence.">
+
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+
+  <!-- Chart.js for High-Performance Canvas Charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+/>
+
+<script
+  src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+</script>
+
+  <!-- Core Dashboard Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+  <div class="app-container">
+
+    <!-- ====================================================================
+         Sidebar Navigation
+         ==================================================================== -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Brand Logo Section -->
+      <div class="sidebar-brand">
+        <div class="brand-icon-wrapper">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+        </div>
+        <div class="brand-info">
+          <span class="brand-title">AirGuard AI</span>
+          <span class="brand-subtitle">Predictive Shield</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="sidebar-nav">
+        <div class="nav-section-title">Telemetry & Ops</div>
+
+        <a href="#dashboard" class="nav-item active" id="navDashboard">
+          <svg viewBox="0 0 24 24">
+            <rect x="3" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="3" width="7" height="7" rx="1.5"></rect>
+            <rect x="14" y="14" width="7" height="7" rx="1.5"></rect>
+            <rect x="3" y="14" width="7" height="7" rx="1.5"></rect>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+
+        <a href="#map" class="nav-item" id="navMap">
+          <svg viewBox="0 0 24 24">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          <span>Live Air Map</span>
+        </a>
+
+        <a href="#forecast" class="nav-item" id="navForecast">
+          <svg viewBox="0 0 24 24">
+            <line x1="18" y1="20" x2="18" y2="10"></line>
+            <line x1="12" y1="20" x2="12" y2="4"></line>
+            <line x1="6" y1="20" x2="6" y2="14"></line>
+          </svg>
+          <span>Forecast Models</span>
+        </a>
+
+        <a href="#early-warning" class="nav-item" id="navAlerts">
+          <svg viewBox="0 0 24 24">
+            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+            <line x1="12" y1="9" x2="12" y2="13"></line>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+          <span>Early Warning</span>
+          <span class="nav-badge">1 High</span>
+        </a>
+
+        <div class="nav-section-title">Sensors & Analytics</div>
+
+        <a href="#fleet" class="nav-item" id="navFleet">
+          <svg viewBox="0 0 24 24">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+            <line x1="12" y1="20" x2="12.01" y2="20"></line>
+          </svg>
+          <span>Sensor Fleet</span>
+        </a>
+
+        <a href="#reports" class="nav-item" id="navReports">
+          <svg viewBox="0 0 24 24">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>Reports & Export</span>
+        </a>
+
+        <a href="#settings" class="nav-item" id="navSettings">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path
+              d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+            </path>
+          </svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <!-- Sidebar Status Card -->
+      <div class="sidebar-footer">
+        <div class="system-status-pill">
+          <div class="status-row">
+            <span class="status-indicator">
+              <span class="pulse-dot"></span>
+              AI Core Online
+            </span>
+            <span style="color: var(--text-dim); font-size: 0.7rem;">v2.4-sim</span>
+          </div>
+          <div class="status-row" style="color: var(--text-muted);">
+            <span>Telemetry Link</span>
+            <span style="color: #38bdf8;">99.4% Sync</span>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ====================================================================
+         Main Wrapper & Top Header
+         ==================================================================== -->
+    <div class="main-wrapper">
+      <header class="top-header">
+        <div class="header-title-section">
+          <h1 class="header-title">AirGuard AI</h1>
+          <span class="header-tag">Hackathon Demo Edition</span>
+        </div>
+
+        <div class="header-controls">
+          <!-- Station Switcher Dropdown -->
+          <div class="station-selector">
+            <select id="stationSelect" class="station-select" aria-label="Select Monitoring Station">
+              <!-- Populated dynamically via JS -->
+            </select>
+            <div class="select-arrow">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </div>
+          </div>
+
+          <!-- Refresh Button -->
+          <button id="refreshBtn" class="header-action-btn" title="Simulate Telemetry Refresh"
+            aria-label="Refresh Data">
+            <svg viewBox="0 0 24 24">
+              <path d="M23 4v6h-6"></path>
+              <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+            </svg>
+          </button>
+
+          <!-- Notifications Alert Ping -->
+          <button class="header-action-btn" title="Critical Environmental Alerts" aria-label="Notifications">
+            <span class="btn-alert-ping"></span>
+            <svg viewBox="0 0 24 24">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </button>
+
+          <!-- Operator Profile Pill -->
+          <div class="user-badge">
+            <div class="user-avatar">AG</div>
+            <div class="user-name">Station Analyst</div>
+          </div>
+        </div>
+      </header>
+
+      <!-- ====================================================================
+           Dashboard Content Area
+           ==================================================================== -->
+      <main class="dashboard-content">
+       <!-- LIVE AIR MAP -->
+<section id="map" class="dashboard-card" style="margin-bottom: 24px;">
+
+  <div class="card-header-clean">
+    <div class="card-title-group">
+      <div class="card-icon-tag">
+        🗺️
+      </div>
+
+      <div>
+        <h2 class="card-title">Live Air Quality Map</h2>
+        <span class="card-subtitle">
+          Real-time monitoring stations
+        </span>
+      </div>
+    </div>
+
+    <span class="insights-header-badge">
+      ● LIVE
+    </span>
+  </div>
+   <button id="useMyLocationBtn" class="location-btn">
+  📍 Use My Location
+</button>
+  <div id="airMap" style="
+    height: 450px;
+    margin-top: 20px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(56, 189, 248, 0.25);
+    background: #0f172a;
+  ">
+  </div>
+
+</section>
+        <!-- ROW 1: Hero Intelligence (Current AQI, Risk Meter, Early Warning) -->
+        <section class="hero-intelligence-row">
+
+          <!-- Card 1: Current AQI Hero Card -->
+          <article class="dashboard-card aqi-hero-card" id="aqiCard">
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <div class="card-icon-tag">
+                  <svg viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M8 12h8"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="card-title">Current AQI</h2>
+                  <span class="card-subtitle">Real-time Ambient Index</span>
+                </div>
+              </div>
+              <span id="aqiStatusChip" class="aqi-status-chip">Sensitive Alert</span>
+            </div>
+
+            <div class="aqi-display-container">
+              <!-- Radial SVG Gauge Ring -->
+              <div class="aqi-radial-wrapper">
+                <svg class="aqi-radial-svg" viewBox="0 0 120 120">
+                  <circle class="aqi-radial-bg" cx="60" cy="60" r="50"></circle>
+                  <circle id="aqiRadialFill" class="aqi-radial-fill" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <div class="aqi-center-text">
+                  <span id="aqiNumber" class="aqi-number">148</span>
+                  <span class="aqi-label">US AQI</span>
+                </div>
+              </div>
+
+              <div class="aqi-details">
+                <div class="aqi-pollutant-badge">
+                  Key Pollutant: <strong id="aqiPollutant">PM2.5</strong>
+                </div>
+                <p style="font-size: 0.78rem; color: var(--text-muted); line-height: 1.4;">
+                  Fine respirable particles exceed recommended outdoor exposure baselines.
+                </p>
+              </div>
+            </div>
+
+            <div class="aqi-meta-pills">
+              <div class="meta-pill">24h Shift: <span id="aqiChangePill" style="color: #fb923c;">+12%</span></div>
+              <div class="meta-pill">Confidence: <span>99.2%</span></div>
+              <div class="meta-pill">Synced: <span id="liveClock">19:15:00</span></div>
+            </div>
+          </article>
+
+          <!-- Card 2: Pollution Risk Indicator -->
+          <article class="dashboard-card risk-indicator-card" id="riskCard">
+            <div>
+              <div class="card-header-clean">
+                <div class="card-title-group">
+                  <div class="card-icon-tag">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <h2 class="card-title">Pollution Risk Indicator</h2>
+                    <span class="card-subtitle">Public Health Advisory System</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="risk-level-banner" id="riskBanner">
+                <div>
+                  <div class="risk-title-sub">Current Hazard Exposure</div>
+                  <div class="risk-level-name" id="riskLevelName">Elevated Threat</div>
+                </div>
+                <div class="risk-score-badge">
+                  <span id="riskScoreVal">72</span><small>/100</small>
+                </div>
+              </div>
+
+              <!-- 5-Segment Risk Bar -->
+              <div class="risk-meter-track"
+                title="Good (0-50), Moderate (51-100), Sensitive (101-150), Unhealthy (151-200), Hazardous (201+)">
+                <div class="meter-segment seg-good active" title="Good (0-50)"></div>
+                <div class="meter-segment seg-moderate active" title="Moderate (51-100)"></div>
+                <div class="meter-segment seg-sensitive active" title="Unhealthy for Sensitive (101-150)"></div>
+                <div class="meter-segment seg-unhealthy" title="Unhealthy (151-200)"></div>
+                <div class="meter-segment seg-hazardous" title="Hazardous (201+)"></div>
+              </div>
+            </div>
+
+            <!-- Demographics List -->
+            <div class="risk-advisories-list" id="riskAdvisoriesList">
+              <div class="advisory-item">
+                <div class="advisory-dot alert"></div>
+                <div><strong>Asthma & Respiratory:</strong> Limit prolonged outdoor physical exertion.</div>
+              </div>
+              <div class="advisory-item">
+                <div class="advisory-dot caution"></div>
+                <div><strong>Children & Seniors:</strong> Moderate intensive outdoor activities.</div>
+              </div>
+            </div>
+          </article>
+
+          <!-- Card 3: Early Warning Card -->
+          <article class="dashboard-card early-warning-card" id="early-warning"></article>
+            <div class="warning-beacon-header">
+              <div class="beacon-tag">
+                <span class="warning-pulse-beacon"></span>
+                <span id="warningBeaconTag">CRITICAL ALERT</span>
+              </div>
+              <span id="warningTime" class="warning-time-chip">In 2 - 4 hours</span>
+            </div>
+
+            <h3 class="warning-title" id="warningTitle">Atmospheric Stagnation & Inversion Warning</h3>
+            <p class="warning-summary" id="warningSummary">
+              Thermal inversion cap detected at 240m altitude with near-zero boundary winds. Local vehicular PM2.5 will
+              concentrate rapidly in street canyons.
+            </p>
+
+            <div class="spike-projection-box">
+              <div>
+                <div class="spike-label">Projected Severity Spike</div>
+                <div style="font-size: 0.72rem; color: var(--text-muted);">Neural confidence 96.4%</div>
+              </div>
+              <div class="spike-value" id="warningSpike">186 AQI (Unhealthy)</div>
+            </div>
+
+            <div>
+              <div class="recommended-actions-title">Automated Countermeasures</div>
+              <ul class="mitigation-actions-list" id="warningActions">
+                <li>Auto-notify urban school districts & athletic faculties</li>
+                <li>Trigger municipal misting systems along transit corridors</li>
+                <li>Switch building HVAC filtration to recirculating carbon stage</li>
+              </ul>
+            </div>
+          </article>
+
+        </section>
+
+        <section id="fleet"></section>
+        <!-- ROW 2: Environmental Telemetry (5 Cards) -->
+        <section class="metrics-grid-5">
+
+          <!-- Metric 1: PM2.5 -->
+          <article class="dashboard-card metric-card" id="cardPM25">
+            <div class="metric-top-row">
+              <span class="metric-name-tag">PM 2.5 Fine Dust</span>
+              <span id="pm25Status" class="metric-status-tag tag-warning">Elevated</span>
+            </div>
+            <div class="metric-value-container">
+              <span id="pm25Val" class="metric-value">58.4</span>
+              <span class="metric-unit">µg/m³</span>
+            </div>
+            <div>
+              <div class="metric-progress-wrapper">
+                <div class="metric-progress-bar">
+                  <div id="pm25Bar" class="metric-progress-fill fill-warning" style="width: 78%;"></div>
+                </div>
+              </div>
+              <div class="metric-footer-note">
+                <span>WHO Limit: 15 µg/m³</span>
+                <span id="pm25Note">35 µg/m³</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Metric 2: PM10 -->
+          <article class="dashboard-card metric-card" id="cardPM10">
+            <div class="metric-top-row">
+              <span class="metric-name-tag">PM 10 Coarse</span>
+              <span id="pm10Status" class="metric-status-tag tag-normal">Moderate</span>
+            </div>
+            <div class="metric-value-container">
+              <span id="pm10Val" class="metric-value">86.2</span>
+              <span class="metric-unit">µg/m³</span>
+            </div>
+            <div>
+              <div class="metric-progress-wrapper">
+                <div class="metric-progress-bar">
+                  <div id="pm10Bar" class="metric-progress-fill fill-normal" style="width: 57%;"></div>
+                </div>
+              </div>
+              <div class="metric-footer-note">
+                <span>WHO Limit: 45 µg/m³</span>
+                <span id="pm10Note">150 µg/m³</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Metric 3: Temperature -->
+          <article class="dashboard-card metric-card" id="cardTemp">
+            <div class="metric-top-row">
+              <span class="metric-name-tag">Ambient Temp</span>
+              <span id="tempStatus" class="metric-status-tag tag-normal">Warm</span>
+            </div>
+            <div class="metric-value-container">
+              <span id="tempVal" class="metric-value">28.5</span>
+              <span class="metric-unit">°C</span>
+            </div>
+            <div>
+              <div class="metric-progress-wrapper">
+                <div class="metric-progress-bar">
+                  <div id="tempBar" class="metric-progress-fill fill-normal" style="width: 63%;"></div>
+                </div>
+              </div>
+              <div class="metric-footer-note">
+                <span>Surface Sensor</span>
+                <span id="tempNote">Feels 31.2°C</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Metric 4: Humidity -->
+          <article class="dashboard-card metric-card" id="cardHumidity">
+            <div class="metric-top-row">
+              <span class="metric-name-tag">Rel. Humidity</span>
+              <span id="humidityStatus" class="metric-status-tag tag-normal">Humid</span>
+            </div>
+            <div class="metric-value-container">
+              <span id="humidityVal" class="metric-value">68</span>
+              <span class="metric-unit">%</span>
+            </div>
+            <div>
+              <div class="metric-progress-wrapper">
+                <div class="metric-progress-bar">
+                  <div id="humidityBar" class="metric-progress-fill fill-normal" style="width: 68%;"></div>
+                </div>
+              </div>
+              <div class="metric-footer-note">
+                <span>Moisture Saturation</span>
+                <span id="humidityNote">Dew pt 21.8°C</span>
+              </div>
+            </div>
+          </article>
+
+          <!-- Metric 5: Wind Speed -->
+          <article class="dashboard-card metric-card" id="cardWind">
+            <div class="metric-top-row">
+              <span class="metric-name-tag">Surface Wind</span>
+              <span id="windStatus" class="metric-status-tag tag-danger">Stagnant</span>
+            </div>
+            <div class="metric-value-container">
+              <span id="windVal" class="metric-value">3.8</span>
+              <span class="metric-unit">km/h</span>
+            </div>
+            <div>
+              <div class="metric-progress-wrapper">
+                <div class="metric-progress-bar">
+                  <div id="windBar" class="metric-progress-fill fill-danger" style="width: 14%;"></div>
+                </div>
+              </div>
+              <div class="metric-footer-note">
+                <span>Vector Dispersal</span>
+                <span id="windNote">ENE (65°)</span>
+              </div>
+            </div>
+          </article>
+
+        </section>
+        </section>
+        <section id="reports"></section>
+        <!-- ROW 3: Predictive Analytics & AI Insights -->
+        <section class="analytics-intelligence-row">
+
+          <!-- Forecast Chart Card -->
+          <article class="dashboard-card forecast-card" id="forecast">
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <div class="card-icon-tag">
+                  <svg viewBox="0 0 24 24">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="card-title">AQI Predictive Forecast</h2>
+                  <span id="forecastRangeInfo" class="card-subtitle">Showing: Next 24 Hours (Hourly AI Projection) • 95%
+                    Confidence Interval</span>
+                </div>
+              </div>
+
+              <!-- Time Horizon Buttons -->
+              <div class="forecast-header-controls">
+                <div class="time-range-toggle-group" id="forecastRangeGroup">
+                  <button type="button" id="btnForecast24h" class="time-toggle-btn active" data-range="24h">Next
+                    24H</button>
+                  <button type="button" id="btnForecast48h" class="time-toggle-btn" data-range="48h">48H</button>
+                  <button type="button" id="btnForecast7d" class="time-toggle-btn" data-range="7d">7 Days</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Canvas Container -->
+            <div class="chart-canvas-container">
+              <canvas id="forecastChart"></canvas>
+            </div>
+
+            <!-- Threshold Indicator Legend -->
+            <div class="chart-legend-row">
+              <div class="legend-badge good"><span></span> Good (0-50)</div>
+              <div class="legend-badge moderate"><span></span> Moderate (51-100)</div>
+              <div class="legend-badge sensitive"><span></span> Sensitive (101-150)</div>
+              <div class="legend-badge unhealthy"><span></span> Unhealthy (151-200)</div>
+            </div>
+          </article>
+
+          <!-- AI Insights Card -->
+          <article class="dashboard-card ai-insights-card" id="aiInsightsCard">
+            <div class="card-header-clean">
+              <div class="card-title-group">
+                <div class="card-icon-tag" style="background: rgba(6, 182, 212, 0.15);">
+                  <svg viewBox="0 0 24 24">
+                    <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z"></path>
+                    <path d="M12 6v6l4 2"></path>
+                  </svg>
+                </div>
+                <div>
+                  <h2 class="card-title">AI Insights & Guidance</h2>
+                  <span class="card-subtitle">Atmospheric Neural Correlator</span>
+                </div>
+              </div>
+              <span class="insights-header-badge">94.8% Conf</span>
+            </div>
+
+            <!-- Dynamic Insights Feed -->
+            <div class="insights-items-list" id="insightsItemsList">
+              <!-- Populated dynamically via app.js -->
+            </div>
+
+            <div class="insight-footer-meta">
+              <div class="neural-engine-status">
+                Ensemble: <span>Transformer-GRU Micro-Model</span>
+              </div>
+              <button id="mitigateBriefBtn" class="btn-mitigate-brief">Generate Mitigation Brief</button>
+            </div>
+          </article>
+
+        </section>
+        </section>
+      <!-- SETTINGS SECTION -->
+<section id="settings" class="dashboard-card" style="margin: 24px; padding: 30px;">
+  <div class="card-header-clean">
+    <div class="card-title-group">
+      <div class="card-icon-tag">
+        ⚙️
+      </div>
+      <div>
+        <h2 class="card-title">Settings</h2>
+        <span class="card-subtitle">AirGuard system configuration</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; display: grid; gap: 14px;">
+    <div class="meta-pill">
+      🛰️ Sensor Network: <strong>Online</strong>
+    </div>
+
+    <div class="meta-pill">
+      🔄 Data Sync: <strong>Automatic</strong>
+    </div>
+
+    <div class="meta-pill">
+      🤖 AI Engine: <strong>Active</strong>
+    </div>
+
+    <div class="meta-pill">
+      📡 Telemetry Status: <strong>99.4% Sync</strong>
+    </div>
+  </div>
+</section>
+      </main>
+    </div>
+  </div>
+
+  <!-- Load Data & Main Controller -->
+  <script src="js/mockData.js"></script>
+  <script src="js/app.js"></script>
+</body>
+
+</html>
