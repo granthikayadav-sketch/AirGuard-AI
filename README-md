@@ -1,0 +1,48 @@
+# 🌍 AirGuard AI
+
+### Real-Time Air Quality Monitoring & Environmental Intelligence Dashboard
+
+AirGuard AI is a web-based environmental intelligence dashboard designed to monitor air quality, analyze pollution levels, and provide location-based air quality insights.
+
+## 🎯 Purpose
+AirGuard AI is designed to make air-quality information easy to understand by providing real-time AQI monitoring, location-based air-quality data, pollution risk assessment, interactive maps, and early warnings through a single dashboard.
+
+## 🚀 Features
+
+- 📊 Real-time AQI monitoring
+- 📍 Current location-based air quality
+- 🗺️ Interactive air quality map
+- 🔵 Multiple monitoring stations
+- 🌫️ PM2.5 and PM10 monitoring
+- ⚠️ Pollution risk assessment
+- 🚨 Early warning insights
+- 📈 AQI forecasting dashboard
+- 🤖 AI-powered environmental insights
+- 🔄 Live data refresh
+
+## 🛠️ Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+- Node.js
+- Express-style Node.js server
+- Leaflet.js
+- Chart.js
+- Open-Meteo Air Quality API
+- OpenStreetMap
+
+## ⚙️ How It Works
+
+```text
+User Location
+     ↓
+Live Air Quality Data
+     ↓
+AQI & Pollutant Analysis
+     ↓
+Risk Assessment
+     ↓
+Forecast & Early Warning
+     ↓
+Environmental Insights
